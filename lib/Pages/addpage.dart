@@ -1,5 +1,8 @@
+import 'package:cardsimtixon/Pages/Homepage.dart';
 import 'package:cardsimtixon/cantroller/cards_controller.dart';
+import 'package:cardsimtixon/components/cheklogo.dart';
 import 'package:cardsimtixon/components/myTextcoponient.dart';
+import 'package:cardsimtixon/model/cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +13,9 @@ import 'package:provider/provider.dart';
 import 'package:switcher/core/switcher_size.dart';
 import 'package:switcher/switcher.dart';
 import 'package:switcher_button/switcher_button.dart';
+
+import '../components/creditcarddata.dart';
+import '../components/creditcartanumber.dart';
 
 class AddPage extends StatefulWidget {
   const AddPage({super.key});
@@ -56,7 +62,7 @@ class AddPageState extends State<AddPage> {
                 48.verticalSpaceFromWidth,
                 Container(
                   width: 342,
-                  height: 540,
+                  height: formKey.currentState?.validate() ?? false ? 450 : 510,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -152,6 +158,10 @@ class AddPageState extends State<AddPage> {
                         ),
                         24.verticalSpaceFromWidth,
                         TextFormField(
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(3)
+                          ],
                           controller: cvv,
                           validator: (s) {
                             if (s?.isEmpty ?? true) {
@@ -202,74 +212,49 @@ class AddPageState extends State<AddPage> {
                     ),
                   ),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      if (formKey.currentState?.validate() ?? false) {}
+                80.verticalSpaceFromWidth,
+                InkWell(
+                    onTap: () {
+                      if (formKey.currentState?.validate() ?? false) {
+                        String cardstype = Cheklogo(number.text);
+                        firestore.collection('Cards').add(Cards(
+                                name: name.text,
+                                cvv: int.parse(cvv.text),
+                                number: number.text,
+                                data: data.text,
+                                Type: cardstype)
+                            .tojson());
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return HomePage();
+                          },
+                        ));
+                      }
                     },
-                    child: const Text("Sign Up"))
+                    child: Container(
+                      width: 196,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(40),
+                          )),
+                      child: Center(
+                        child: Text(
+                          'Proceed',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ))
               ],
             ),
           ),
         ),
       ),
     );
-  }
-}
-
-// this class will be called, when their is change in textField
-class CreditCardNumberFormater extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.selection.baseOffset == 0) {
-      return newValue;
-    }
-    String enteredData = newValue.text; // get data enter by used in textField
-    StringBuffer buffer = StringBuffer();
-
-    for (int i = 0; i < enteredData.length; i++) {
-      // add each character into String buffer
-      buffer.write(enteredData[i]);
-      int index = i + 1;
-      if (index % 4 == 0 && enteredData.length != index) {
-        // add space after 4th digit
-        buffer.write(" - ");
-      }
-    }
-
-    return TextEditingValue(
-        text: buffer.toString(), // final generated credit card number
-        selection: TextSelection.collapsed(
-            offset: buffer.toString().length) // keep the cursor at end
-        );
-  }
-}
-
-// this class will be called, when their is change in textField
-class CreditcardData extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.selection.baseOffset == 0) {
-      return newValue;
-    }
-    String enteredData = newValue.text; // get data enter by used in textField
-    StringBuffer buffer = StringBuffer();
-
-    for (int i = 0; i < enteredData.length; i++) {
-      // add each character into String buffer
-      buffer.write(enteredData[i]);
-      int index = i + 1;
-      if (index % 2 == 0 && enteredData.length != index) {
-        // add space after 4th digit
-        buffer.write("/");
-      }
-    }
-
-    return TextEditingValue(
-        text: buffer.toString(), // final generated credit card number
-        selection: TextSelection.collapsed(
-            offset: buffer.toString().length) // keep the cursor at end
-        );
   }
 }
