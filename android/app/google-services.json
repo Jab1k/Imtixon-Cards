@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "467393845762",
+    "project_id": "criditcards",
+    "storage_bucket": "criditcards.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467393845762:android:8c1d609ff35b5cbf9d651b",
+        "android_client_info": {
+          "package_name": "com.example.cardsimtixon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "467393845762-pviegpbtg2eo2aufsuem3bc3ioii5e6i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cardsimtixon",
+            "certificate_hash": "130c446c88004e1254f3504778a573088b6ee815"
+          }
+        },
+        {
+          "client_id": "467393845762-313lktagvhou1qv0jgsh3bmmn4b0un3g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSp4tK5M1L_LNYoZmF0e4w1tpGpcRkxU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "467393845762-313lktagvhou1qv0jgsh3bmmn4b0un3g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
