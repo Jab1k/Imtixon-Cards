@@ -1,5 +1,6 @@
 import 'package:cardsimtixon/Pages/Homepage.dart';
 import 'package:cardsimtixon/cantroller/cards_controller.dart';
+import 'package:cardsimtixon/components/ChekDate.dart';
 import 'package:cardsimtixon/components/cheklogo.dart';
 import 'package:cardsimtixon/components/myTextcoponient.dart';
 import 'package:cardsimtixon/model/cards.dart';
@@ -216,19 +217,21 @@ class AddPageState extends State<AddPage> {
                 InkWell(
                     onTap: () {
                       if (formKey.currentState?.validate() ?? false) {
-                        String cardstype = Cheklogo(number.text);
-                        firestore.collection('Cards').add(Cards(
-                                name: name.text,
-                                cvv: int.parse(cvv.text),
-                                number: number.text,
-                                data: data.text,
-                                Type: cardstype)
-                            .tojson());
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) {
-                            return HomePage();
-                          },
-                        ));
+                        if (ChekDate(data.text)) {
+                          String cardstype = Cheklogo(number.text);
+                          firestore.collection('Cards').add(Cards(
+                                  name: name.text,
+                                  cvv: int.parse(cvv.text),
+                                  number: number.text,
+                                  data: data.text,
+                                  Type: cardstype)
+                              .tojson());
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) {
+                              return HomePage();
+                            },
+                          ));
+                        }
                       }
                     },
                     child: Container(
