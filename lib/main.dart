@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'Pages/SplashScreen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CardsController())
       ],
       child: ScreenUtilInit(
-          designSize: const Size(428, 926),
+          designSize: const Size(390, 844),
           minTextAdapt: true,
           splitScreenMode: true,
           builder: (BuildContext context, Widget? child) {

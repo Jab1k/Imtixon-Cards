@@ -9,6 +9,7 @@ class CardsController extends ChangeNotifier {
   bool isLoading = true;
   bool isSaveLoading = false;
   QuerySnapshot? res;
+  List? listofDocIds;
 
   getCategory() async {
     isLoading = true;
@@ -22,8 +23,10 @@ class CardsController extends ChangeNotifier {
           cvv: element['Cvv'],
           number: element['Number'],
           data: element['data'],
-          Type: element['Type']));
+          Type: element['Type'],
+          id: element.id));
     });
+    listofDocIds = res?.docs;
     isLoading = false;
     notifyListeners();
   }
@@ -37,10 +40,21 @@ class CardsController extends ChangeNotifier {
   }) async {
     isLoading = true;
     notifyListeners();
-    await firestore.collection("Cards").add(
-        Cards(name: name, cvv: cvv, number: number, data: data, Type: type)
-            .tojson());
+    await firestore.collection("Cards").add(Cards(
+            name: name,
+            cvv: cvv,
+            number: number,
+            data: data,
+            Type: type,
+            id: "")
+        .tojson());
     isLoading = false;
+    notifyListeners();
+  }
+
+  DeleteCard(String Id, {int? index}) {
+    firestore.collection('Cards').doc(Id).delete();
+    listofcards.removeAt(index!);
     notifyListeners();
   }
 }

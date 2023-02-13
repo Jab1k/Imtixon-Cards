@@ -1,6 +1,7 @@
 import 'package:cardsimtixon/Pages/allcards.dart';
 import 'package:cardsimtixon/cantroller/cards_controller.dart';
 import 'package:cardsimtixon/components/myTextcoponient.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +118,6 @@ class _HomePageState extends State<HomePage> {
                               color: Colors.white, size: 35),
                         )
                       : Cardspage(),
-                 
                 ],
               ),
             ),
