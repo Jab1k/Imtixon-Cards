@@ -52,6 +52,7 @@ class CardsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ignore: non_constant_identifier_names
   DeleteCard(String Id, {int? index}) {
     firestore.collection('Cards').doc(Id).delete();
     listofcards.removeAt(index!);
